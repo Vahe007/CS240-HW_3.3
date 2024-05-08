@@ -3,6 +3,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -10,6 +12,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,11 +24,12 @@ public class BaseTest {
     public static final String DRIVER_PATH = "src/main/resources/chromedriver";
     public static final String baseURL = "https://www.flipkart.com/";
     public static final String PATH = "screenshots/";
-    public static final String PNG_EXTENSION = ".png";
+    public static final String EXTENSION = ".png";
 
     protected WebDriver     driver;
     protected WebDriverWait webDriverWait;
     protected HomePage homePage;
+
 
     @BeforeMethod
     public void beforeClass() {
@@ -34,6 +39,16 @@ public class BaseTest {
         homePage = new HomePage(driver);
         driver.get(baseURL);
     }
+
+//    @BeforeMethod
+//    public void beforeClass() throws MalformedURLException {
+//        FirefoxOptions options = new FirefoxOptions();
+//        driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
+//        driver.manage().window().maximize();
+//        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+//        homePage = new HomePage(driver);
+//        driver.get(baseURL);
+//    }
 
     @AfterMethod
     public void screenshotAndTerminate(ITestResult result) {
@@ -46,7 +61,7 @@ public class BaseTest {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Path destination = Paths.get(PATH + result.getStartMillis() + "-screenshot" + PNG_EXTENSION);
+                Path destination = Paths.get(PATH + result.getStartMillis() + "-screenshot" + EXTENSION);
                 try {
                     Files.move(screenShotBytes, destination);
                     System.out.println("Screenshot saved: " + destination);
