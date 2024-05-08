@@ -27,9 +27,9 @@ public class BaseTest {
     public static final String PATH = "screenshots/";
     public static final String EXTENSION = ".png";
 
-    protected WebDriver     driver;
-    protected WebDriverWait webDriverWait;
     protected HomePage homePage;
+    protected WebDriver driver;
+    protected WebDriverWait webDriverWait;
 
     @BeforeMethod
     public void beforeClass() throws MalformedURLException {

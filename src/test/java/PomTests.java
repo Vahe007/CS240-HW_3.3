@@ -3,7 +3,7 @@ import POM.SearchResultPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class AllPomTests extends BaseTest {
+public class PomTests extends BaseTest {
     @Test
     public void testAll() {
 //        in some cases the banner is appearing, in some it's not, when its appearing
