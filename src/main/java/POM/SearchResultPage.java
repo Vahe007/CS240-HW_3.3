@@ -94,7 +94,4 @@ public class SearchResultPage extends BasePage {
         return new ProductDetailsPage(driver);
     }
 
-
-
-
 }

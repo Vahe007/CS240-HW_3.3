@@ -3,6 +3,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -30,25 +31,16 @@ public class BaseTest {
     protected WebDriverWait webDriverWait;
     protected HomePage homePage;
 
-
     @BeforeMethod
-    public void beforeClass() {
-        driver = new ChromeDriver();
+    public void beforeClass() throws MalformedURLException {
+        ChromeOptions options = new ChromeOptions();
+        driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
         driver.manage().window().maximize();
-        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
+
+//        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
         homePage = new HomePage(driver);
         driver.get(baseURL);
     }
-
-//    @BeforeMethod
-//    public void beforeClass() throws MalformedURLException {
-//        FirefoxOptions options = new FirefoxOptions();
-//        driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
-//        driver.manage().window().maximize();
-//        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
-//        homePage = new HomePage(driver);
-//        driver.get(baseURL);
-//    }
 
     @AfterMethod
     public void screenshotAndTerminate(ITestResult result) {
