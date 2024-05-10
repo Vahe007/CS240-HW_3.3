@@ -34,11 +34,13 @@ public class BaseTest {
 
 
     @BeforeMethod
-    public void beforeClass() {
-        driver = new ChromeDriver();
+    public void beforeClass() throws MalformedURLException {
+        ChromeOptions options = new ChromeOptions();
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
         driver.manage().window().maximize();
-        homePage = new HomePage(driver);
+//        webDriverWait = new WebDriverWait(driver, Duration.ofSeconds(2));
         driver.get(baseURL);
+        homePage = new HomePage(driver);
     }
 
     @AfterMethod
