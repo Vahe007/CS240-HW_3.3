@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Homework3.2" />
+        <module name="CS240-HW_3.3" />
       </profile>
     </annotationProcessing>
   </component>

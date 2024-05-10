@@ -16,20 +16,20 @@ public class SearchResultPage extends BasePage {
     }
 
     public SearchResultPage clickPriceHighToLow() {
-        WebElement hightToLow = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.HIGH_TO_LOW)));
-        hightToLow.click();
+        WebElement highToLow = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.HIGH_TO_LOW)));
+        highToLow.click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.SELECTED_HIGH_TO_LOW)));
         return this;
     }
 
     public String getFirstProductPrice() {
-        WebElement price = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(SearchResultPageLocators.FIRST_PRODUCT_PRICE)));
+        WebElement price = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.FIRST_PRODUCT_PRICE)));
         return price.getText();
     }
 
     public String getSecondProductPrice() {
-        WebElement price = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(SearchResultPageLocators.SECOND_PRODUCT_PRICE)));
+        WebElement price = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.SECOND_PRODUCT_PRICE)));
         return price.getText();
     }
 
@@ -39,49 +39,25 @@ public class SearchResultPage extends BasePage {
         return number;
     }
 
-//    public void scrollToAvailabilityFilter() {
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(SearchResultPageLocators.SELECTED_FILTER)));
-//        WebElement filter = driver.findElement(By.xpath(SearchResultPageLocators.AVAILABILITY_FILTER));
-//        Actions a = new Actions(driver);
-//        a.moveToElement(filter).perform();
-//        wait.until(ExpectedConditions.elementToBeClickable(filter)).click();
-//    }
-//
-//    public void filterAvailableProducts() {
-//        scrollToAvailabilityFilter();
-//        WebElement checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.AVAILABILITY_CHECKBOX)));
-//        checkbox.click();
-//    }
-
-
-
-
-    // Method to scroll to element
-    public static void scrollToElement(WebDriver driver, WebDriverWait wait, By locator) {
+    public WebElement scrollToElement(By locator) {
         WebElement element = driver.findElement(locator);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        wait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
-    public void scrollToAvailabilityFilter() {
-        scrollToElement(driver, wait, By.className(SearchResultPageLocators.AVAILABILITY_FILTER));
-        WebElement filter = driver.findElement(By.className(SearchResultPageLocators.AVAILABILITY_FILTER));
-        filter.click();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'center', behavior: 'smooth'});", element);
+        return element;
     }
 
     public void filterAvailableProducts() {
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.HIGH_TO_LOW)));
-        scrollToAvailabilityFilter();
+        By filter_locator = By.xpath(SearchResultPageLocators.AVAILABILITY_FILTER);
+        WebElement availability_filter = scrollToElement(filter_locator);
+        availability_filter.click();
         WebElement checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.AVAILABILITY_CHECKBOX)));
         checkbox.click();
     }
 
 
     public WebElement getLowToHighButton() {
-        WebElement lowToHight = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.LOW_TO_HIGH)));
-        return lowToHight;
+        WebElement lowToHigh = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(SearchResultPageLocators.LOW_TO_HIGH)));
+        return lowToHigh;
     }
-
-
 
 
     public void clickFirstProduct() {
@@ -92,6 +68,15 @@ public class SearchResultPage extends BasePage {
     public ProductDetailsPage goToProduct() {
         clickFirstProduct();
         return new ProductDetailsPage(driver);
+    }
+
+    public WebElement findElement(By locator) {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public WebElement noResultFound() {
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(SearchResultPageLocators.NO_RESULT)));
+        return element;
     }
 
 }

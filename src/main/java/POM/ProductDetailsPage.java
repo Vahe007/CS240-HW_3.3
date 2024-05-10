@@ -31,4 +31,10 @@ public class ProductDetailsPage extends BasePage {
         return buyNowButton;
     }
 
+    public HomePage clickHeaderLogo() {
+        WebElement logo = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(ProductDetailsPageLocators.HEADER_LOGO)));
+        logo.click();
+        return new HomePage(driver);
+    }
+
 }
